@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         // Вызов наполнителей
         $this->call([
             RoleSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            StatusSeeder::class,
         ]);
     }
 }
