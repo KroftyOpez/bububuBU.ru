@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CategoryRequest;
 use App\Models\Category;
@@ -32,6 +33,10 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        if (empty($category->id)) {
+            throw new ApiException('Not Found ', 404);
+        }
+
         return response()->json($category)->setStatusCode(200);
     }
 
@@ -40,6 +45,9 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
+        if (empty($category->id)) {
+            throw new ApiException('Not Found ', 404);
+        }
         $category->update($request->validated());
         return response()->json($category)->setStatusCode(200);
     }
@@ -49,6 +57,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if (empty($category->id)) {
+            throw new ApiException('Not Found ', 404);
+        }
         $category->delete();
         return response()->json(null)->setStatusCode(204);
     }

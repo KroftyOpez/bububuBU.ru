@@ -10,4 +10,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 use \App\Http\Controllers\Api\CategoryController;
-Route::apiResource('categories', CategoryController::class);
+Route::middleware('auth:api')->apiResource('categories', CategoryController::class)->except(['index', 'show']);
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');

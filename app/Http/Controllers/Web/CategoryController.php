@@ -5,10 +5,16 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\CategoryRequest;
 use App\Models\Category;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
+
+// Добавляем пространство имен для политики
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CategoryController extends Controller
 {
+    // Добавляем трейд для политики
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -23,6 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Category::class);
         return view('categories.create');
     }
 
@@ -31,6 +38,8 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
+        $this->authorize('create', Category::class);
+
         // Создание категории
         $category = Category::create($request->validated());
         return redirect()->route('categories.index');
@@ -49,6 +58,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        $this->authorize('update', $category);
         return view('categories.edit', compact('category'));
     }
 
@@ -57,6 +67,8 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
+        $this->authorize('update', $category);
+
         $category->update($request->validated());
         return redirect()->route('categories.index');
     }
@@ -66,6 +78,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $this->authorize('delete', $category);
+
         $category->delete();
         return redirect()->route('categories.index');
     }

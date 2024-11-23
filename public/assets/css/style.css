@@ -15,6 +15,12 @@ body {
     grid-template-columns: 1fr 35px 35px 35px;
     padding: 25px 0;
 }
+.grid-product {
+    max-width: 640px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr) 35px 35px 35px;
+    padding: 25px 0;
+}
 .grid div {
     border-bottom: 1px solid #00000033;
     line-height: 25px;
